@@ -22,6 +22,20 @@ class PhotosController < ApplicationController
     new_photo.save
     redirect_to("/photos/" + new_photo.id.to_s)
   end
+  def update
+    # Parameters: {"query_image"=>"https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*;set=set1", "query_caption"=>"dog test", "modify_id"=>"956"}
+    the_id = params.fetch("modify_id")
+    matching_photos = Photo.where({ :id => the_id })
+    updated_photo = matching_photos.first
+
+    input_photo = params.fetch("query_photo")
+    input_caption = params.fetch("query_caption")
+
+    updated_photo.image = input_photo
+    updated_photo.caption = input_caption
+    updated_photo.save
+    redirect_to("/photos/" + updated_photo.id.to_s)
+  end
   def delete
     the_id = params.fetch("delete_id")
     matching_photos = Photo.where({ :id => the_id })
