@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def home
+    matching_users = User.all
+    @users_list = matching_users.order({ :username => :asc })
+    render({ :template => "user_templates/index" })
+  end
   def index
     matching_users = User.all
     @users_list = matching_users.order({ :username => :asc })
